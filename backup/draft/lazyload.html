@@ -1,0 +1,207 @@
+
+
+/**
+ *
+
+使用方法：
+let lazyload = new Lazyload();
+
+ *
+ */
+
+export default class Lazyload {
+
+  constructor(config) {
+    this.runState = false;
+    this.elementQueueData = [];
+    this.loadRetryMax = 3;
+
+    config && this.init(config);
+  }
+
+
+  init({
+    wrap = window,  // 列表包裹元素
+    direction = 'vertical',  // vertical | horizontal
+    onload,   // lazy加载成功的回调
+  }) {
+
+    this.$wrap = $(wrap);
+    this.isVertical = direction === 'vertical';
+    this.events = new Events();
+
+    this.$wrap.on('scroll', e => {
+      this.triggerEvent();
+    });
+
+    $(window).on('resize', () => {
+      triggerEvent();
+    });
+
+    setTimeout(() => {
+      this.triggerEvent();
+    });
+
+    this.collect();
+    this.runState = true;
+  }
+
+
+  collect() {
+    let $collectElement = this.$wrap.find('.js-lazyload-el');
+    if ($collectElement.length < 1) return;
+
+    let elementQueueData = this.elementQueueData;
+
+    for (let i = 0, len = $collectElement.length; i < len; i++) {
+      let $el = $collectElement.eq(i);
+      elementQueueData.push({
+          el: $el,
+          errorCount: 0
+      });
+
+      $el.removeClass('js-lazyload-el');
+    }
+  }
+
+
+  checkElement() {
+    let { $wrap, isVertical, elementQueueData } = this;
+
+    let relative = isVertical ? 'top' : 'left';
+
+    let wrapScrollTop = isVertical ? $wrap.scrollTop() : $wrap.scrollLeft();
+    let wrapOffsetTop = $wrap.offset()[relative];
+    let wrapHeight = $wrap.height();
+
+    let lazyloadRangeStart = wrapOffsetTop - wrapHeight / 2;
+    let lazyloadRangeEnd = wrapOffsetTop + wrapHeight * 3 / 2;
+
+    let newQueueData = [];
+
+    for (let i = 0, len = elementQueueData.length; i < len; i++) {
+      let offset = elementQueueData[i].el.offset();
+      if (lazyloadRangeStart < offset[relative] &&
+        lazyloadRangeEnd > offset[relative]
+      ) {
+          this.loadAsset(elementQueueData[i]);
+      } else {
+          newQueueData.push(elementQueueData[i]);
+      }
+    }
+
+    this.elementQueueData = newQueueData;
+  }
+
+
+  loadAsset(elementQueueInfo) {
+    let elNode = elementQueueInfo.el[0];
+
+    this.events.trigger('beforeLoad', elementQueueInfo);
+
+    let url = elNode.getAttribute('data-lazyload-src');
+
+    if (url) {
+      // 此处没有做图片url处理
+
+      loadImg(url, {
+        onload: () => {
+            if (elNode.nodeName === 'IMG') {
+                elNode.setAttribute('src', url);
+            } else {
+                elNode.style.backgroundImage = `url(${url})`;
+            }
+
+            elNode.removeAttribute('data-lazyload-src');
+
+            this.events.trigger('onload', elementQueueInfo);
+
+            elNode = elementQueueInfo = null;
+        },
+        onerror: () => {
+            ++elementQueueInfo.errorCount;
+
+            if (elementQueueInfo.errorCount < this.loadRetryMax) {
+                this.loadAsset(elementQueueInfo);
+            } else {
+                elementQueueInfo = null;
+            }
+        }
+      });
+    } else {
+      this.events.trigger('load', elementQueueInfo);
+    }
+  }
+
+
+  triggerEvent = () => {
+    if (!this.runState) return;
+
+    if (this.timer) {
+      clearTimeout(this.timer);
+      this.timer = null;
+    }
+
+    this.timer = setTimeout(() => {
+      this.timer = null;
+
+      this.checkElement();
+    }, 100);
+  }
+
+
+  triggerCheck() {
+    this.checkElement();
+  }
+
+
+  clean() {
+    this.elementQueueData = [];
+  }
+
+
+  play() {
+    this.runState = true;
+  }
+
+
+  pause() {
+    this.runState = false;
+  }
+
+
+  on(type, callback, context) {
+    return this.events.on(type, callback, context);
+  }
+
+
+  once(type, callback, context) {
+    return this.events.once(type, callback, context);
+  }
+}
+
+
+
+function loadImg(url, options = {}) {
+  let node = new Image();
+
+  node.onload = () => {
+      options.onload();
+      node.onload = node.onerror = null;
+      node = null;
+  };
+
+  node.onerror = () => {
+      options.onerror();
+      node.onload = node.onerror = null;
+      node = null;
+  };
+
+  node.src = url;
+
+  if (node.complete) {
+      node.onload();
+  }
+}
+
+

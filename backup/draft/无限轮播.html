@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .swipe-container {
+      width: 300px;
+      overflow: hidden;
+    }
+    .swipe-wrap {
+      height: 100px;
+      font-size: 0;
+      white-space: nowrap;
+      transition: transform;
+    }
+    .swipe-item {
+      height: 100%;
+      font-size: 12px;
+      display: inline-block;
+      border: 1px solid #ddd;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+
+
+  <div class="swipe-container">
+    <div class="swipe-wrap">
+      <div class="swipe-item">1</div>
+      <div class="swipe-item">2</div>
+      <div class="swipe-item">3</div>
+    </div>
+  </div>
+
+
+  <script>
+    (function () {
+      let container = document.querySelector('.swipe-container');
+      let itemWidth = container.clientWidth;
+
+      let wrap = document.querySelector('.swipe-wrap');
+      let items = wrap.querySelectorAll('.swipe-item');
+      let itemsCount = items.length;
+
+      items = Array.prototype.slice.call(items);
+      items.forEach(function (item) {
+        item.style.width = itemWidth + 'px';
+      });
+
+      // 复制首尾一张
+      let _first = items[0].cloneNode(true);
+      let _last = items[itemsCount - 1].cloneNode(true);
+
+      wrap.appendChild(_first);
+      wrap.insertBefore(_last, items[0]);
+
+      let activeIndex = 1;
+      wrap.style.transform = `translate3d(${-activeIndex * itemWidth + 'px'},0,0)`;
+
+      let timer;
+      autoSwipe();
+
+      function autoSwipe() {
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          activeIndex++;
+          wrap.style.transitionDuration = '.5s';
+          wrap.style.transform = `translate3d(${-activeIndex * itemWidth + 'px'},0,0)`;
+
+          // 动画播完要取消动画时长
+          setTimeout(function () {
+            wrap.style.transitionDuration = '0s';
+
+            // 轮回
+            if (activeIndex > itemsCount) {
+              setTimeout(function () {
+                activeIndex = 1;
+                wrap.style.transform = `translate3d(${-activeIndex * itemWidth + 'px'},0,0)`;
+              })
+            }
+          }, 500)
+          return autoSwipe();
+        }, 1000)
+      }
+
+    })();
+  </script>
+</body>
+</html>

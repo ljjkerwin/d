@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <textarea id="input"> </textarea>
+  <div id="result"  contenteditable style="border: 1px solid black; width: 200px; height: 200px;">
+  </div>
+
+
+  <script>
+    var input = document.querySelector('#input');
+    var result = document.querySelector('#result');
+
+
+    input.addEventListener('paste', function (e) {
+      var clipboardData = e.clipboardData;
+      if (!clipboardData) return;
+
+      // safara 没有clipboardData.items
+      var items = clipboardData.items || [],
+          types = clipboardData.types || [],
+          item, type, file;
+      console.log(clipboardData,'parse --- itemsLength: ' + items.length + ' typesLength: '+ types.length)
+
+      for (var i = 0; i < items.length; i++) {
+        type = items[i].type;
+        if (type.indexOf('image') !== -1) {
+          file = items[i].getAsFile(); // return Blob
+          console.log(file)
+
+          var fr = new FileReader();
+
+          fr.onload = function (e) {
+              var img = new Image();
+              img.src = blobUrl;
+              result.appendChild(img);
+          };
+
+          fr.readAsDataURL(file);
+
+          var blobUrl = window.URL.createObjectURL(file);
+					console.log(blobUrl);
+        }
+      }
+    })
+    </script>
+</body>
+</html>

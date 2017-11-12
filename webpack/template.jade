@@ -1,0 +1,26 @@
+doctype
+html(lang='en')
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no")
+    title!= title
+    script.
+      (function() {
+        responsive();
+        window.addEventListener("resize", responsive);
+        function responsive() {
+          var htmlEle = document.documentElement,
+              windowWidth = htmlEle.clientWidth,
+              designWidth = parseInt(htmlEle.getAttribute("data-designWidth")) || 750;
+          windowWidth > 768 && (windowWidth = 768);
+          htmlEle.style.fontSize = (windowWidth * 100 / designWidth) + "px";
+        }
+      })();
+    link(rel="stylesheet" href="/dist_dev/css/" + title + ".css")
+  body
+    div#app
+    script.
+      (function loading(win,doc){var s=document.createElement('style');s.innerHTML='.___loading-icon{display:inline-block;opacity:1;-webkit-transition:opacity .5s ease;transition:opacity .5s ease}.___loading-icon-hide{opacity:0}.___loading-icon i{display:block;width:100%;height:100%;background:transparent url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PHBhdGggZmlsbD0ibm9uZSIgZD0iTTAgMGgxMDB2MTAwSDB6IiAvPjxyZWN0IHdpZHRoPSI3IiBoZWlnaHQ9IjIwIiB4PSI0Ni41IiB5PSI0MCIgZmlsbD0iI0UyRTJFMiIgcng9IjUiIHJ5PSI1IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIC0zMCkiIC8+PHJlY3Qgd2lkdGg9IjciIGhlaWdodD0iMjAiIHg9IjQ2LjUiIHk9IjQwIiBmaWxsPSIjREFEQURBIiByeD0iNSIgcnk9IjUiIHRyYW5zZm9ybT0icm90YXRlKDMwIDEwNS45OCA2NSkiIC8+PHJlY3Qgd2lkdGg9IjciIGhlaWdodD0iMjAiIHg9IjQ2LjUiIHk9IjQwIiBmaWxsPSIjRDJEMkQyIiByeD0iNSIgcnk9IjUiIHRyYW5zZm9ybT0icm90YXRlKDYwIDc1Ljk4IDY1KSIgLz48cmVjdCB3aWR0aD0iNyIgaGVpZ2h0PSIyMCIgeD0iNDYuNSIgeT0iNDAiIGZpbGw9IiNDQkNCQ0IiIHJ4PSI1IiByeT0iNSIgdHJhbnNmb3JtPSJyb3RhdGUoOTAgNjUgNjUpIiAvPjxyZWN0IHdpZHRoPSI3IiBoZWlnaHQ9IjIwIiB4PSI0Ni41IiB5PSI0MCIgZmlsbD0iI0MyQzBDMSIgcng9IjUiIHJ5PSI1IiB0cmFuc2Zvcm09InJvdGF0ZSgxMjAgNTguNjYgNjUpIiAvPjxyZWN0IHdpZHRoPSI3IiBoZWlnaHQ9IjIwIiB4PSI0Ni41IiB5PSI0MCIgZmlsbD0iI0JBQjhCOSIgcng9IjUiIHJ5PSI1IiB0cmFuc2Zvcm09InJvdGF0ZSgxNTAgNTQuMDIgNjUpIiAvPjxyZWN0IHdpZHRoPSI3IiBoZWlnaHQ9IjIwIiB4PSI0Ni41IiB5PSI0MCIgZmlsbD0iI0IyQjJCMiIgcng9IjUiIHJ5PSI1IiB0cmFuc2Zvcm09InJvdGF0ZSgxODAgNTAgNjUpIiAvPjxyZWN0IHdpZHRoPSI3IiBoZWlnaHQ9IjIwIiB4PSI0Ni41IiB5PSI0MCIgZmlsbD0iI0FCQTlBQSIgcng9IjUiIHJ5PSI1IiB0cmFuc2Zvcm09InJvdGF0ZSgtMTUwIDQ1Ljk4IDY1KSIgLz48cmVjdCB3aWR0aD0iNyIgaGVpZ2h0PSIyMCIgeD0iNDYuNSIgeT0iNDAiIGZpbGw9IiNBM0ExQTIiIHJ4PSI1IiByeT0iNSIgdHJhbnNmb3JtPSJyb3RhdGUoLTEyMCA0MS4zNCA2NSkiIC8+PHJlY3Qgd2lkdGg9IjciIGhlaWdodD0iMjAiIHg9IjQ2LjUiIHk9IjQwIiBmaWxsPSIjOUI5OTlBIiByeD0iNSIgcnk9IjUiIHRyYW5zZm9ybT0icm90YXRlKC05MCAzNSA2NSkiIC8+PHJlY3Qgd2lkdGg9IjciIGhlaWdodD0iMjAiIHg9IjQ2LjUiIHk9IjQwIiBmaWxsPSIjOTg5Njk3IiByeD0iNSIgcnk9IjUiIHRyYW5zZm9ybT0icm90YXRlKC02MCAyNC4wMiA2NSkiIC8+PHJlY3Qgd2lkdGg9IjciIGhlaWdodD0iMjAiIHg9IjQ2LjUiIHk9IjQwIiBmaWxsPSIjRTlFOUU5IiByeD0iNSIgcnk9IjUiIHRyYW5zZm9ybT0icm90YXRlKC0zMCAtNS45OCA2NSkiIC8+PC9zdmc+) center no-repeat;background-size:contain;-webkit-animation:___loading-icon 0.8s steps(12, end) infinite;animation:___loading-icon 0.8s steps(12, end) infinite}@-webkit-keyframes ___loading-icon{0%{-webkit-transform:rotate3d(0, 0, 1, 0deg);transform:rotate3d(0, 0, 1, 0deg)}100%{-webkit-transform:rotate3d(0, 0, 1, 360deg);transform:rotate3d(0, 0, 1, 360deg)}}@keyframes ___loading-icon{0%{-webkit-transform:rotate3d(0, 0, 1, 0deg);transform:rotate3d(0, 0, 1, 0deg)}100%{-webkit-transform:rotate3d(0, 0, 1, 360deg);transform:rotate3d(0, 0, 1, 360deg)}}.___loading-icon{position:fixed;top:50%;left:50%;width:30px;height:30px;margin-top:-15px;margin-left:-15px}';doc.head.appendChild(s);var l=document.createElement('span');l.className='___loading-icon';l.innerHTML='<i></i>';doc.body.appendChild(l);var t;win.loadingHide=function(){l.className='___loading-icon ___loading-icon-hide';clearTimeout(t);t=setTimeout(function(){l.style.display='none'},550)};win.loadingShow=function(){clearTimeout(t);l.style.display='';l.className='___loading-icon'}})(window,document);
+    //- script(src="/lib/statistics.js")
+    script(src="/lib/zepto-1.2.0-full.js")
+    script(src="/dist_dev/js/"+title+".js")

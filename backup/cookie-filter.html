@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+  #raw-cookie {
+    display: block;
+    width: 100%;
+  }
+
+  #result {
+    display: block;
+    width: 100%;
+  }
+  </style>
+</head>
+
+<body>
+  <div>
+    <input type="text" id="old-ip" placeholder="被替换域名">替换成这个<input type="text" id="new-ip">
+  </div>
+  <br>
+  <div>
+    <button onclick="convertInput()">左边域名 替换成 右边域名</button>
+  </div>
+  <br>
+  <textarea name="" id="raw-cookie" rows="10"></textarea>
+  <textarea name="" id="result" rows="50"></textarea>
+  <script>
+  function LSMaker(lsKey) {
+    if (!lsKey) return false;
+    this.lsKey = lsKey;
+    this.obj = {};
+    this.init();
+  }
+  LSMaker.prototype.init = function() {
+    var obj = this.get();
+    if (obj !== null && typeof obj === 'object') {
+      this.obj = obj;
+    }
+  }
+  LSMaker.prototype.set = function(val) {
+    this.obj = val;
+    localStorage.setItem(this.lsKey, JSON.stringify(val));
+  }
+  LSMaker.prototype.get = function() {
+    return JSON.parse(localStorage.getItem(this.lsKey));
+  }
+  LSMaker.prototype.setItem = function(key, val) {
+    this.obj[key] = val;
+    this.set(this.obj);
+  }
+  LSMaker.prototype.getItem = function(key) {
+    return this.obj[key];
+  }
+
+  var ls = new LSMaker('cookieFilter');
+
+  var newIp = document.getElementById('new-ip');
+  var oldIp = document.getElementById('old-ip');
+  var raw = document.getElementById('raw-cookie');
+  var result = document.getElementById('result');
+
+  newIp.value = ls.getItem('newIp') || '';
+  oldIp.value = ls.getItem('oldIp') || '';
+  raw.value = ls.getItem('raw') || '';
+  result.value = ls.getItem('result') || '';
+
+  function convertInput() {
+			var ip = newIp.value;
+			var input = raw.value;
+			input = input.replace(newIp.value ,oldIp.value);
+			result.value = input;
+
+			ls.set({
+				newIp: newIp.value,
+				oldIp: oldIp.value,
+				raw: raw.value,
+				result: result.value
+			})
+		}
+  </script>
+</body>
+
+</html>

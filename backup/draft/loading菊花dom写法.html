@@ -1,0 +1,122 @@
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1, minimum-scale=1">
+  <title>test</title>
+  <style type="text/css">
+    .loading_ { position: fixed; top: 50%; left: 50%; width: 0; opacity: 1; }
+    .loading_hide {
+      -webkit-animation: rotate360 .8s infinite linear, loadingHide .5s 1 forwards;
+      animation: rotate360 .8s infinite linear, loadingHide .5s 1 forwards;
+    }
+    .loading_show {
+      opacity: 0; 
+      -webkit-animation: rotate360 .8s infinite linear, loadingShow .5s 1 forwards;
+      animation: rotate360 .8s infinite linear, loadingShow .5s 1 forwards;
+    }
+    .loading__::after {
+      content: ""; display: block; position: absolute; top: 50%; background-color: black; -webkit-transform: translateY(-50%); transform: translateY(-50%);
+      /*loading小横线长度、厚度、圆心距离*/
+      width: 6px;
+      height: 2px;
+      margin-left: 6px;
+    }
+    @-webkit-keyframes rotate360 {
+      to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+    }
+    @keyframes rotate360 {
+      to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+    }
+    @-webkit-keyframes loadingShow {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    @keyframes loadingShow {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    @-webkit-keyframes loadingHide {
+      0% { opacity: 1; }
+      99% { opacity: 0; top: 50%; }
+      100% { opacity: 0; top: 200%; }
+    }
+    @keyframes loadingHide {
+      0% { opacity: 1; }
+      99% { opacity: 0; top: 50%; }
+      100% { opacity: 0; top: 200%; }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div id="root">
+    
+
+    
+  </div>
+  <script type="text/javascript">
+  (function(win, doc) {
+    responsive();
+    win.addEventListener("resize", responsive);
+
+    function responsive() {
+      var docEl = doc.documentElement;
+      var windowWidth = docEl.clientWidth;
+      var designWidth = parseInt(docEl.getAttribute("data-designWidth")) || 750;
+      if (windowWidth > designWidth) {
+        windowWidth = designWidth;
+      }
+      docEl.style.fontSize = windowWidth * 100 / designWidth + "px";
+    }
+  })(window, document);
+  </script>
+
+  <script>
+    (function(win, wrap) {
+      var count = 11, //线条数目
+        degInt = 360 / count, //线条角度间隔
+        deg = 0, //起始角度
+        opaInt = 0.45 / count, //透明度间隔
+        opa = 0.06, //起始透明度
+        __, i, //局部变量
+        loading = document.createElement('div');
+      loading.className = 'loading_ loading_show';
+      wrap.appendChild(loading);
+      for (i = 0; i < count; i++) {
+        __ = document.createElement('div');
+        __.className = 'loading__'; 
+        __.setAttribute('style', 'position: absolute; width: 0' +
+          '; -webkit-transform: rotate(' + deg + 'deg)' +
+          '; transform: rotate(' + deg + 'deg)' +
+          '; opacity: ' + opa);
+        deg += degInt;
+        opa += opaInt;
+        loading.appendChild(__);
+      }
+      /**
+       * 全局方法：
+       * 隐藏loading：loadingHide()
+       * 显示loading：loadingShow()
+       */
+      win.loadingHide = function() {
+        loading.className = 'loading_ loading_hide';
+      }
+      win.loadingShow = function() {
+        loading.className = 'loading_ loading_show';
+      }
+    })(window, document.body);
+
+    setTimeout(function() {
+      loadingHide();
+    }, 2000)
+
+    setTimeout(function() {
+      loadingShow();
+    }, 4000)
+  </script>
+
+
+</body>
+
+</html>

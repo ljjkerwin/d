@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+	<style>
+	*{
+		padding:0;
+		margin:0;
+	}
+	ul{
+		list-style:none;
+	}
+	#banner-box{
+		width:100%;
+		/*height:100%;*/
+		/*position:absolute;*/
+		height:4000px;
+	}
+	#one{
+		background: red;
+	}	
+	#two{
+		background: green;
+	}	
+	#three{
+		background: blue;
+	}
+	.banner{
+		width:100%;
+		
+		
+	}
+	.banner-btn{
+		float:left;
+		border:1px solid black;
+		width:30px;
+		height:30px;
+	}
+
+.fadeout{
+	animation: ff 2s;
+	animation-fill-mode : forwards;
+}
+@keyframes ff{
+	0%{
+		opacity:100%;
+
+	}
+	50%{
+		opacity:50%;
+
+	}
+	100%{
+		opacity:0;
+		margin-top:100px;
+	}
+}
+.container{
+	width:100%;
+	/*height:600px;*/
+	overflow:hidden;
+	position:relative;
+}
+
+.out{
+	width:156px;
+}
+.in{
+height:50px;
+float:left;
+width:50px;
+border:1px solid black;
+
+}
+.active{
+	background:red;
+}
+
+
+
+	</style>
+
+</head>
+<body>
+
+
+
+
+<div class="out">
+	<div class="in active" id="in1"></div>
+	<div class="in" id="in2"></div>
+	<div class="in" id="in3"></div>
+	<div class="in" id="in4"></div>
+	<div class="in" id="in5"></div>
+	<div class="in" id="in6"></div>
+	<div class="in" id="in7"></div>
+	<div class="in" id="in8"></div>
+	<div class="in" id="in9"></div>
+</div>
+
+
+<script>
+
+
+	var in1=document.getElementById("in1")
+	var in2=document.getElementById("in2")
+	var in3=document.getElementById("in3")
+	var in4=document.getElementById("in4")
+	var in5=document.getElementById("in5")
+	var in6=document.getElementById("in6")
+	var in7=document.getElementById("in7")
+	var in8=document.getElementById("in8")
+	var in9=document.getElementById("in9")
+	var inn=[in1,in2,in3,in6,in9,in8,in7,in4];
+
+
+	var index=0;
+	var tt=0;
+	var time=40+3;
+	ss();
+	function ss(){
+		var sss=setTimeout(function(){
+
+			for(i=0;i<8;i++){
+				inn[i].className="in";
+			}
+			inn[index].className="in active";
+			(index!=7)?index++:index=0;
+
+			if(tt==time){
+				return;
+			}
+			tt++;
+			ss();
+		},tt*tt*0.2+30)
+	}
+
+	
+</script>
+</body>
+</html>

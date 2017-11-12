@@ -1,0 +1,21 @@
+.btn-default {
+  display: inline-block;
+  padding: 0 1em;
+  border-radius: 4px;
+  background-color: #4848b3;
+  $h: 1.8em;
+  height: $h;
+  line-height: $h;
+  font-size: 14px;
+  color: #fff;
+  white-space: nowrap;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn-default-l {
+  @extend .btn-default;
+  background-color: #fff;
+  color: #4848b3;
+}

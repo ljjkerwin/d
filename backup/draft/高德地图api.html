@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" data-designWidth="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>Document</title>
+    <style>
+    body{
+        width:6.40rem;
+        font-size:0.16rem;
+    }
+    *{
+        padding:0;
+        margin:0;
+    }
+    #map {
+        width: 100%;
+        height: 400px;
+
+    }
+
+    </style>
+    <script>
+    //移动设备屏幕适配
+    function mobileResponsive(){
+        var windowWidth=document.documentElement.clientWidth;
+        var designWidth=parseInt(document.getElementsByTagName("html")[0].getAttribute("data-designWidth"))||640;
+        if(windowWidth>designWidth){
+            windowWidth=designWidth;
+        }
+        document.getElementsByTagName("html")[0].style.fontSize=windowWidth*100/designWidth+"px";
+    };
+    mobileResponsive();
+    </script>
+</head>
+
+<body>
+    <div id="map"></div>
+    <div id="map1"></div>
+
+    <button id="getLocate" onclick="getLocate()">getLocate</button>
+    经度：<input type="text" id="longitude" value="113.28">
+    纬度：<input type="text" id="latitude" value="23.11">
+    <button id="showMap">显示地图</button>
+    <button id="showRoute">查看路线</button>
+
+
+    <div id="log"></div>
+
+<div id="mmm" style="width:400px;height:400px;border:1px solid black;"></div>
+
+
+<div id="qq" style="background:red;width:50px;height:50px;border:50px solid rgba(1,1,1,0.5)"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="public/js/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=9e39aac6d7d68821e2bb6efd4d6ac0ea"></script>
+<script>
+
+
+
+
+function getLocate(){
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function() {
+            log("纬度："+p.coords.latitude+" 经度："+p.coords.longitude)
+        }, function(){
+            log("err")
+        });
+    }
+}
+
+
+function log(msg){
+    var log=document.getElementById("log");
+    log.innerHTML+= "<br>" +msg;
+}
+var m;
+document.getElementById("showMap").addEventListener("click",function(){
+    var lon=document.getElementById("longitude").value
+    var lat=document.getElementById("latitude").value
+    m=new Map([lon,lat]);
+    m.showMap();
+
+});
+document.getElementById("showRoute").addEventListener("click",function(){
+    m.showRoute();
+});
+
+
+
+
+function Map(arr){
+    this.lon=arr[0];
+    this.lat=arr[1];
+    this.map=new AMap.Map("map");
+}
+Map.prototype.showMap=function(){
+    var map=this.map;
+
+
+    //center属性的值可以使经纬度的二元数组，也可以是AMap.LngLat对象
+    map.setZoom(14);
+    map.setCenter([this.lon, this.lat]);
+
+
+    //添加工具条和比例尺控件
+    AMap.plugin(["AMap.ToolBar", "AMap.Scale"], function() {
+        map.addControl(new AMap.ToolBar());
+        map.addControl(new AMap.Scale());
+    })
+
+    //添加点标记
+    var marker = new AMap.Marker({
+        icon:"public/images/favicon.ico",
+        position: [this.lon, this.lat],
+        map: map
+    });
+
+    // var marker2 = new AMap.Marker();
+    // marker2.setPosition([113.28, 23.12]);
+    // marker2.setMap(map);
+    //移除点标记
+    // marker2.setMap();
+
+    //添加信息窗体
+    var infowindow = new AMap.InfoWindow({
+        content: '<p style="color:red;">高德地图</p><p>高德是中国领先的数字地图内容、导航和位置服务解决方案提供商。</p>',
+        offset: new AMap.Pixel(0, -20),
+        size: new AMap.Size(230, 0)
+    })
+    infowindow.open(map, marker.getPosition())
+
+
+}
+
+Map.prototype.showRoute=function(){
+    var map=this.map;
+    //出行线路规划
+    AMap.service('AMap.Transfer',function(){
+        transOptions = {
+            city: "广州市",
+            map: map,
+            policy: AMap.TransferPolicy.LEAST_TIME //乘车策略
+        };
+        trans= new AMap.Transfer(transOptions);
+        //TODO: 使用transfer对象调用公交换乘相关的功能
+        trans.search([113.24, 23.12], [113.33, 23.13]);
+    })
+}
+
+
+
+
+    //点击信息窗体显示
+    // var clickHandle = AMap.event.addListener(marker, 'click', function() {
+    //         infowindow.open(map, marker.getPosition())
+    //     })
+
+    //AMap.event.removeListener(clickHandle);
+
+
+
+    // 放置点标记
+    // function addMarker(e) {
+    //     new AMap.Marker({
+    //         position: e.lnglat,
+    //         map: map
+    //     })
+    //     console.log(e.lnglat)
+    // }
+
+    // AMap.event.addListener(map, "click", addMarker)
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="//cdn.bootcss.com/github-markdown-css/2.4.1/github-markdown.min.css">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    }
+    #result {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      min-width: 800px;
+      height: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+      overflow-y: auto;
+    }
+    #raw {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 50%;
+      height: 100%;
+      border: 1px solid #eee;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+  
+<div id="result" class="markdown-body"></div>
+<textarea id="raw" spellcheck="false">
+
+# Chat Api
+
+> iframe外调用方式
+
+```javascript
+frames[0].postMessage(['apiName', data1, data2...], 'http://chat.url');
+```
+
+
+## developer
+* 李家俊@Kerwin
+
+</textarea>
+
+<script src="//cdn.bootcss.com/showdown/1.6.4/showdown.js"></script>
+<script>
+  var converter = new showdown.Converter();
+
+  raw.addEventListener('input', function () {
+    convert();
+  });
+
+  raw.addEventListener('keydown', function (e) {
+    if (e.keyCode == 9) {
+      e.preventDefault();
+      var indent = '    ';
+      var start = this.selectionStart;
+      var end = this.selectionEnd;
+      var selected = window.getSelection().toString();
+
+      selected = indent;
+      this.value = this.value.substring(0, start) + selected + this.value.substring(end);
+      this.setSelectionRange(start + indent.length, start + indent.length);
+    }
+  });
+
+  convert();
+
+  if (location.search.indexOf('edit=1') !== -1) {
+    raw.style.display = 'block';
+  }
+
+  function convert() {
+    var val = raw.value;
+    result.innerHTML = converter.makeHtml(val);
+  }
+
+  
+</script>
+</body>
+</html>

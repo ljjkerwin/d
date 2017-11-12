@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en" style="font-size:50px">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Document</title>
+    <script type="text/javascript">
+
+    </script>
+    <style>
+
+
+html {
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+body {
+  max-width: 750px;
+  margin: 0 auto;
+  position: relative;
+  font-size: 0.24rem;
+}
+
+/*page-status*/
+
+#page-status {
+  font-family: helvetica, Arial, "Hiragino Sans GB", "Microsoft Yahei", "simsun";
+  font-size: 0.32rem;
+  color: #999;
+  text-align: center;
+}
+
+#page-status-wrap {
+  position: fixed;
+  z-index: 1001;
+  top: 50%;
+  left: 50%;
+  height: 1.2rem;
+  margin-top: -1rem;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+}
+
+#page-status-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #f5f5f5;
+  z-index: 1000;
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+}
+
+.page-status-hide #page-status-wrap {
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  -webkit-transition: height 1s 1.2s, opacity 1s;
+  transition: height 1s 1.2s, opacity 1s;
+  -webkit-animation: page-status-hide 1s 1;
+          animation: page-status-hide 1s 1;
+}
+
+.page-status-no-mask #page-status-mask {
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  -webkit-transition: height 0s 1s, opacity 1s;
+  transition: height 0s 1s, opacity 1s;
+  -webkit-animation: page-status-hide 1s 1;
+          animation: page-status-hide 1s 1;
+}
+
+@-webkit-keyframes page-status-hide {
+  0% {
+    overflow: visible;
+  }
+
+  100% {
+    overflow: visible;
+  }
+}
+
+@keyframes page-status-hide {
+  0% {
+    overflow: visible;
+  }
+
+  100% {
+    overflow: visible;
+  }
+}
+
+#page-status-text {
+  margin-top: 0.16rem;
+  white-space: nowrap;
+}
+
+#page-status-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  position: relative;
+  display: inline-block;
+}
+
+#page-status-icon-arc,
+#page-status-icon-sign {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+}
+
+#page-status-icon-arc {
+  -webkit-animation: page-status-icon-rotate 1s linear infinite;
+  animation: page-status-icon-rotate 1s linear infinite;
+}
+
+@-webkit-keyframes page-status-icon-rotate {
+  to {
+    -webkit-transform: rotate(-360deg);
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes page-status-icon-rotate {
+  to {
+    -webkit-transform: rotate(-360deg);
+    transform: rotate(-360deg);
+  }
+}
+
+/*page-popup*/
+
+#page-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  -webkit-transition: opacity 0.3s, height 0s 0.3s;
+  transition: opacity 0.3s, height 0s 0.3s;
+  font-size: 0.26rem;
+  text-align: center;
+  color: #888;
+  opacity: 0;
+  height: 0;
+}
+
+#page-popup.page-popup-show {
+  height: 100%;
+  opacity: 1;
+  -webkit-transition: opacity 0.3s !important;
+  transition: opacity 0.3s !important;
+}
+
+#page-popup-wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 0.1rem;
+  width: 56%;
+  box-shadow: 0 0 0.2rem 0 rgba(0, 0, 0, 0.3);
+}
+
+#page-popup-text {
+  padding: 0.24rem 0.36rem 0.2rem;
+  font-size: 0.26rem;
+  line-height: 1.5;
+  min-height: 0.4rem;
+  word-break: break-word;
+}
+
+#page-popup-btn {
+  display: inline-block;
+  width: 80%;
+  padding: 0.16rem;
+  border-top: 1px solid #eee;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+   -ms-user-select: none;
+       user-select: none;
+  
+}
+
+    </style>
+</head>
+
+<body>
+    123412342134234124234124124234234
+    <br> 123412342134234124234124124234234
+    <br> 123412342134234124234124124234234
+    <br> 123412342134234124234124124234234
+    <br> 123412342134234124234124124234234
+    <br> 123412342134234124234124124234234123421342
+    <br> 1234123421342341242341241242342341234213423
+    <br> 12341234213423412423412412423423412342134
+    <br> 12341234213423412423412412423423412342134234124
+    <br> 123412342134234124234124124234234
+    <br> 123412342134234124234124124234234
+    <br> 123412342134234124234124124234234
+    <br> 123412342134234124234124124234234
+    <br> 123412342134234124234124124234234
+    <br> 123412342134234124234124124234234
+    <br> 123412342134234124234124124234234
+    <br> 123412342134234124234124124234234
+    <br> 123412342134234124234124124234234
+    <br> 123412342134234124234124124234234
+    <br> 123412342134234124234124124234234
+    <br> 123412342134234124234124124234234
+    <br> 123412342134234124234124124234234
+    <br> 123412342134234124234124124234234
+    <br> 123412342134234124234124124234234
+    <br>
+    <button onclick="fn1()">loading</button>
+    <button onclick="fn3()">stoploading</button>
+    <button onclick="fn2()">prompt</button>
+
+    <script>
+    (function() {
+        //移动设备屏幕自适应
+        (function() {
+            var htmlEle = document.documentElement;
+            var windowWidth = htmlEle.clientWidth;
+            var designWidth = parseInt(htmlEle.getAttribute("data-designWidth")) || 750;
+            if (windowWidth > designWidth) {
+                windowWidth = designWidth;
+            }
+            htmlEle.style.fontSize = windowWidth * 100 / designWidth + "px";
+        })();
+
+        /**
+         * PageStatus
+         */
+        function PageStatus() {
+            var dom = document.createElement("div");
+            dom.innerHTML = '<div id="page-status" class="page-status-loading page-status-show"><div id="page-status-wrap"><div id="page-status-icon"><canvas id="page-status-icon-arc" width="120px" height="120px">加载中</canvas><canvas id="page-status-icon-sign" width="120px" height="120px"></canvas></div><div id="page-status-text" style="display:none"></div></div><div id="page-status-mask"></div></div>';
+            document.body.appendChild(dom);
+            drawLoading(document.getElementById("page-status-icon-arc"), document.getElementById("page-status-icon-sign"));
+            this.ele = document.getElementById("page-status");
+            this.statusText = document.getElementById("page-status-text");
+            this.state = {
+                class: "loading",
+                display: "show",
+                mask: true,
+                text: ""
+            }
+            this.setState();
+            function drawLoading(arcEle, signEle) {
+                //画圆弧
+                var count = 200; //分段数
+                var arc = arcEle.getContext("2d");
+                var dis = Math.PI * 2 / count;
+                var begin = 0;
+                var col = 100; //开始颜色
+                var _col = col;
+
+                arc.lineWidth = 8;
+                for (var i = 0; i < count; i++, col++) {
+                    arc.strokeStyle = 'rgb(' + col + ',' + col + ',' + col + ')';
+                    arc.beginPath();
+                    arc.arc(60, 60, 56, begin, begin = begin + dis, false);
+                    arc.stroke();
+                }
+                arc.fillStyle = 'rgb(' + _col + ',' + _col + ',' + _col + ')';
+                arc.lineWidth = 1;
+                arc.beginPath();
+                arc.arc(116, 60, 4, 0, Math.PI*2);
+                arc.fill();
+
+                //画标志
+                var sign = signEle.getContext("2d");
+                var beginAngle = 0.8;
+                sign.fillStyle = "#888";
+                sign.beginPath();
+                sign.arc(60, 56, 24, beginAngle, Math.PI - beginAngle, true);
+                sign.lineTo(60, 90);
+                sign.closePath();
+                sign.fill();
+            }
+        }
+        PageStatus.prototype.setState = function(obj) {
+            var state = this.state;
+            var statusText = this.statusText;
+            for (var item in obj) {
+                state[item] = obj[item];
+            }
+
+            this.ele.className = "page-status-" + state.class + " page-status-" + state.display + (state.mask ? "" : " page-status-no-mask");
+
+            if (state.text) {
+                statusText.style.display = "block";
+                statusText.innerHTML = state.text;
+            } else {
+                statusText.style.display = "none";
+                statusText.innerHTML = "";
+            }
+        }
+        PageStatus.prototype.hide = function(str, time) {
+            time || (time = 0);
+            var _this = this;
+            setTimeout(function() {
+                _this.setState({
+                    display: "hide",
+                    mask: false,
+                    str: str
+                });
+            }, time);
+        }
+        PageStatus.prototype.loading = function(str) {
+            this.setState({
+                class: "loading",
+                display: "show",
+                text: str
+            });
+        }
+        PageStatus.prototype.success = function(str, time) {
+            this.setState({
+                class: "success",
+                text: str
+            });
+            this.hide(str, time);
+        }
+        PageStatus.prototype.fail = function(str, time) {
+            //time:空值或数字表示隐藏时间，false表示不消失
+            this.setState({
+                class: "fail",
+                text: str
+            });
+            if (time === false) return;
+            this.hide(str, time);
+        }
+        PageStatus.prototype.noMask = function() {
+            this.setState({
+                mask: false
+            });
+        }
+        window.pageStatus = new PageStatus();
+        /**
+         * PagePopup
+         */
+        function PagePopup() {
+            var dom = document.createElement("div");
+            dom.innerHTML = '<div id="page-popup"><div id="page-popup-wrap"><div id="page-popup-text"></div><div id="page-popup-btn"></div></div></div>';
+            document.body.appendChild(dom);
+            this.popup = document.getElementById("page-popup");
+            this.popupText = document.getElementById("page-popup-text");
+            this.popupBtn = document.getElementById("page-popup-btn");
+        }
+        PagePopup.prototype.show = function() {
+            this.overflow = document.body.style.overflow;
+            document.body.style.overflow = "hidden";
+            this.popup.className = "page-popup-show";
+        }
+        PagePopup.prototype.hide = function() {
+            document.body.style.overflow = this.overflow;
+            this.popup.className = "";
+        }
+        PagePopup.prototype.prompt = function(text, btnText, callback) {
+            this.popupText.innerHTML = text;
+            this.popupBtn.innerHTML = btnText || "确认";
+            var _this = this;
+            this.popupBtn.onclick = function() {
+                _this.hide();
+                callback && callback();
+            }
+            this.show();
+        }
+        window.pagePopup = new PagePopup();
+    })();
+
+    setTimeout(function() {
+        pageStatus.success();
+    },1000)
+    
+
+    function fn1() {
+        pageStatus.loading("添加文字");
+
+    }
+    function fn3() {
+        pageStatus.success("成功");
+    }
+    function fn2() {
+        pagePopup.prompt("user has not login");
+    }
+    </script>
+    </div>
+</body>
+
+</html>
