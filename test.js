@@ -1,3 +1,2 @@
-a = require('./z')
-console.log(__dirname)
-console.log(a)
+
+console.log(process.argv)

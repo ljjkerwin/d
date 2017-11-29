@@ -1,10 +1,10 @@
 {
-  "name": "ljjtest",
+  "name": "d",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./webpack/server",
-    "build": "webpack --config ./webpack/config.build.js"
+    "server": "pm2 start server --watch server -- -e dev",
+    "build": "node_modules/.bin/webpack --config ./webpack/config.build.js"
   },
   "main": "Gruntfile.js",
   "devDependencies": {
@@ -21,6 +21,7 @@
     "babel-preset-stage-0": "^6.5.0",
     "classnames": "^2.2.3",
     "colors": "^1.1.2",
+    "commander": "^2.12.1",
     "css-loader": "^0.23.1",
     "eslint": "^3.16.0",
     "eslint-plugin-react": "^4.2.3",
@@ -31,6 +32,7 @@
     "gulp-css-longhand": "^1.0.3",
     "gulp-sass": "^3.1.0",
     "immutable": "^3.8.1",
+    "ip": "^1.1.5",
     "jade": "^1.11.0",
     "jquery": "^3.1.1",
     "keymirror": "^0.1.1",
@@ -71,6 +73,7 @@
   "description": "",
   "dependencies": {
     "assert": "^1.4.1",
+    "cookie-parser": "^1.4.3",
     "express": "^4.13.4",
     "express-http-proxy": "^0.6.0",
     "mocha": "^3.5.3"
