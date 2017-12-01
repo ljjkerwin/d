@@ -2,10 +2,13 @@ import './index.scss';
 import React from 'react';
 import { render } from 'react-dom';
 
+import * as actions from './actions';
+console.log(actions)
+
 
 class Item extends React.Component {
   componentWillMount() {
-    console.log('mount')
+    console.log('moun334s33')
   }
   render() {
     return (<div>{this.props.name}</div>)
@@ -69,6 +72,8 @@ class View extends React.Component {
 
 
 
-render(<View />, document.getElementById('app'));
+let root = document.createElement('div')
+document.body.insertBefore(root, document.body.firstChild)
+render(<View />, root)
 
 

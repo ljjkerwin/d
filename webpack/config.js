@@ -7,8 +7,8 @@ const AssetsWebpackPlugin = require('assets-webpack-plugin');
 
 
 let projectPath = path.resolve(__dirname, '../'),
-  entryPath = path.resolve(projectPath, './src/entry'),
-  outputPath = path.resolve(projectPath, '.');
+    entryPath = path.resolve(projectPath, './src/entry'),
+    outputPath = path.resolve(projectPath, '.');
 
 let ignoreEntries = [
   'chat', 

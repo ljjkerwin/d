@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "server": "pm2 start server --watch server -- -e dev",
+    "server": "pm2 start server --watch server -- -e dev && pm2 logs",
+    "dev": "node_modules/.bin/webpack --config ./webpack/config.dev.js --watch",
     "build": "node_modules/.bin/webpack --config ./webpack/config.build.js"
   },
-  "main": "Gruntfile.js",
   "devDependencies": {
     "Promise": "^1.0.5",
     "assets-webpack-plugin": "^3.5.1",
@@ -31,6 +31,7 @@
     "gulp": "^3.9.1",
     "gulp-css-longhand": "^1.0.3",
     "gulp-sass": "^3.1.0",
+    "html-webpack-plugin": "^2.30.1",
     "immutable": "^3.8.1",
     "ip": "^1.1.5",
     "jade": "^1.11.0",
@@ -66,7 +67,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ljjkerwin/nodeweb.git"
+    "url": "git+https://github.com/ljjkerwin/d.git"
   },
   "author": "",
   "license": "ISC",
@@ -76,6 +77,8 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.13.4",
     "express-http-proxy": "^0.6.0",
+    "handlebars": "^4.0.11",
+    "handlebars-loader": "^1.6.0",
     "mocha": "^3.5.3"
   }
 }

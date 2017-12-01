@@ -26,10 +26,10 @@ app
   })
   .use(cookieParser())
 
-
-app.get('/', (req, res, next) => {
-  res.send(commander.env + '224')
-})
+  /**
+   * TODO
+   * requestBody and formData parser
+   */
 
 
 app.use(express.static('./', {
@@ -40,18 +40,24 @@ app.use(express.static('./', {
 }))
 
 
-app.get('/404', (req, res, next) => {
-  res.send('404');
+app.get('/*', (req, res, next) => {
+  res.send(commander.env + '224')
 })
 
 
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something wrong!');
-})
+app
+  // not found
+  .use((req, res, next) => {
+    res.send('404');
+  })
+  // error
+  .use((err, req, res, next) => {
+    console.error(err.stack || err);
+    res.status(500).send('Something wrong!');
+  })
 
 
 app.listen(servicePort, () => {
-  console.log(`>>>>>>>>>>>>>>>>>> server is listening at ${ip.address()}:${servicePort}`);
-})
+    console.log(`>>>>>>>>>>>>>>>>>> server is listening at ${ip.address()}:${servicePort}`);
+  })
 
