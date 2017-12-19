@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "server": "pm2 start server --watch server -- -e dev && pm2 logs",
+    "server": "pm2 start server --watch server -- -e dev && pm2 logs --raw",
     "dev": "node_modules/.bin/webpack --config ./webpack/config.dev.js --watch",
     "build": "node_modules/.bin/webpack --config ./webpack/config.build.js"
   },
@@ -74,11 +74,13 @@
   "description": "",
   "dependencies": {
     "assert": "^1.4.1",
+    "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
     "express": "^4.13.4",
     "express-http-proxy": "^0.6.0",
     "handlebars": "^4.0.11",
     "handlebars-loader": "^1.6.0",
-    "mocha": "^3.5.3"
+    "mocha": "^3.5.3",
+    "multer": "^1.3.0"
   }
 }

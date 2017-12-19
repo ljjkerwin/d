@@ -139,7 +139,7 @@ const getConfig = ({
           'css/[name].css',
       }),
       new webpack.optimize.CommonsChunkPlugin({
-        name: ['react-vendor','common'],
+        name: ['common', 'react-vendor'],
       }),
     ],
 

@@ -4,7 +4,9 @@ const
   express = require('express'),
   commander = require('commander'),
   ip = require('ip'),
-  cookieParser = require('cookie-parser');
+  cookieParser = require('cookie-parser'),
+  bodyParser = require('body-parser'),
+  apiRouter = require('./apiRouter');
 
 
 commander
@@ -21,15 +23,14 @@ const
 
 app
   .use((req, res, next) => {
-    // console.log('log [request]:', req.url);
+    // console.log('[log][request]:', req.url);
     next();
   })
   .use(cookieParser())
+  .use(bodyParser.urlencoded({ extended: true }))
 
-  /**
-   * TODO
-   * requestBody and formData parser
-   */
+  
+app.use('/api', apiRouter())
 
 
 app.use(express.static('./', {
@@ -38,11 +39,6 @@ app.use(express.static('./', {
     res.set('Im', 'ljjkerwin');
   },
 }))
-
-
-app.get('/*', (req, res, next) => {
-  res.send(commander.env + '224')
-})
 
 
 app
@@ -58,6 +54,6 @@ app
 
 
 app.listen(servicePort, () => {
-    console.log(`>>>>>>>>>>>>>>>>>> server is listening at ${ip.address()}:${servicePort}`);
-  })
+  console.log(`>>>>>>>>>>>>>>>>>> server is listening at ${ip.address()}:${servicePort}`);
+})
 

@@ -74,6 +74,6 @@ class View extends React.Component {
 
 let root = document.createElement('div')
 document.body.insertBefore(root, document.body.firstChild)
-render(<View />, root)
+// render(<View />, root)
 
 

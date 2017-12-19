@@ -6,16 +6,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>test</title>
 
+  <link rel="stylesheet" href="/dist/css/react.css">
   <style>
-
-
+    i {
+      font-size: 30px;
+      color: black;
+      font-family: qlicon;
+    }
   </style>
 </head>
 <body>
-  <input type="number">
+  <div style="border: 1px solid black; width: 100px;height: 100px;">
+      <i class="qlicon qlicon-ok"></i>
+  </div>
+  
+
+  <form action="/api/upload?get=555" method="post">
+    <input type="file"  name="fff4">
+    <input type="submit">
+    <input type="text" name="ttt" value="123">
+    <input type="text" name="uii" value="rty">
+  </form>
 
 
 <script src="/dist/js/react-vendor.js"></script>
+<script src="/dist/js/common.js"></script>
 <script src="/dist/js/react.js"></script>
 <script>
 
