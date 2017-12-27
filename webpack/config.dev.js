@@ -6,7 +6,9 @@ const
   ExtractTextPlugin = require('extract-text-webpack-plugin'),
   AssetsWebpackPlugin = require('assets-webpack-plugin'),
   LiveReloadPlugin = require('webpack-livereload-plugin'),
-  HtmlWebpackPlugin = require('html-webpack-plugin');
+  HtmlWebpackPlugin = require('html-webpack-plugin'),
+  HtmlAssetsOrderFixerWebpackPlugin = require('./html-assets-order-fixer-webpack-plugin');
+  const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
 
 
 let projectPath = path.resolve(__dirname, '../'),
@@ -17,7 +19,8 @@ let projectPath = path.resolve(__dirname, '../'),
 let entry = {};
 
 [
-  'react'
+  'react',
+  'doing'
 ].forEach(e => {
   entry[e] = path.resolve(entryPath, e)
 })
@@ -73,7 +76,7 @@ const getConfig = ({
                 options: {
                   plugins: () => [
                     require('autoprefixer')({
-                      browsers: ['> 5%', 'not ie <= 8', 'last 2 versions', 'Firefox ESR', 'iOS >= 8']
+                      browsers: ['> 2%', 'not ie <= 8', 'last 2 versions', 'Firefox ESR', 'iOS >= 8']
                     })
                   ]
                 }
@@ -139,7 +142,7 @@ const getConfig = ({
           'css/[name].css',
       }),
       new webpack.optimize.CommonsChunkPlugin({
-        name: ['common', 'react-vendor'],
+        names: ['react-vendor', 'common', 'manifest'], // 公共的放最后
       }),
     ],
 
@@ -149,8 +152,8 @@ const getConfig = ({
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.scss', '.css'],
       // 自定依赖路径
       alias: {
-        'modules': path.resolve(projectPath, './src/modules'),
         'lib': path.resolve(projectPath, './lib'),
+        'modules': path.resolve(projectPath, './src/modules'),
       }
     },
 
@@ -195,10 +198,27 @@ const getConfigDev = () => {
     new LiveReloadPlugin({
       appendScriptTag: true
     }),
-    new HtmlWebpackPlugin({
-      template: path.resolve(projectPath, 'webpack/template.hbs')
-    }),
+    new HtmlAssetsOrderFixerWebpackPlugin(),
   ]);
+
+  // HtmlWebpackPlugin
+  let htmls = [];
+  for (entry in config.entry) {
+    if (/common|vendor/.test(entry)) continue;
+    let entryName = entry.match(/[^\/]+$/)[0];
+    
+    htmls.push(new HtmlWebpackPlugin({
+      title: entryName,
+      filename: `${entryName}.html`,
+      template: path.resolve(projectPath, 'webpack/template.hbs'),
+      chunks: ({
+        react: ['manifest', 'common', 'react-vendor', entry],
+        doing: ['manifest', 'common', entry]
+      })[entryName],
+    }))
+  }
+
+  config.plugins = config.plugins.concat(htmls)
 
   return config;
 }
@@ -238,3 +258,5 @@ function getEntry(dir) {
 
   return entryObj;
 }
+
+

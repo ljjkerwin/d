@@ -1,9 +1,9 @@
+import 'modules/base-style';
 import './index.scss';
 import React from 'react';
 import { render } from 'react-dom';
 
 import * as actions from './actions';
-console.log(actions)
 
 
 class Item extends React.Component {
@@ -74,6 +74,6 @@ class View extends React.Component {
 
 let root = document.createElement('div')
 document.body.insertBefore(root, document.body.firstChild)
-// render(<View />, root)
+render(<View />, root)
 
 

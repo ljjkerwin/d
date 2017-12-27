@@ -32,6 +32,14 @@ app
   
 app.use('/api', apiRouter())
 
+app.get('/react', function (req, res, next) {
+  res.sendFile(path.resolve('dist/react.html'))
+})
+
+app.get('/doing', function (req, res, next) {
+  res.sendFile(path.resolve('dist/doing.html'))
+})
+
 
 app.use(express.static('./', {
   maxAge: '0',

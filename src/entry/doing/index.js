@@ -1,9 +1,1 @@
-import './style.scss';
-import t from './t';
-
-t(1263);
-
-
-
-
-
+console.log(4)
