@@ -128,10 +128,10 @@ const getConfig = ({
             name: 'fonts/[name].[hash:8].[ext]'
           }
         },
-        {
-          test: /\.hbs$/,
-          loader: "handlebars-loader"
-        }
+        // {
+        //   test: /\.hbs$/,
+        //   loader: "handlebars-loader"
+        // }
       ]
     },
 
@@ -209,9 +209,8 @@ const getConfigDev = () => {
     let entryName = entry.match(/[^\/]+$/)[0];
     
     htmls.push(new HtmlWebpackPlugin({
-      title: entryName,
       filename: `${entryName}.html`,
-      template: path.resolve(projectPath, 'webpack/template.hbs'),
+      template: path.resolve(projectPath, 'webpack/template.html'),
       chunks: ({
         react: ['manifest', 'common', 'react-vendor', entry],
         doing: ['manifest', 'common', entry]
