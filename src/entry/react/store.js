@@ -3,10 +3,9 @@ import reducers from './reducers';
 import createLogger from 'redux-logger';
 
 
-
 const enhances = [];
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development' || true) {
   if (window.__REDUX_DEVTOOLS_EXTENSION__) {
     enhances.push(window.__REDUX_DEVTOOLS_EXTENSION__());
   } else if (window.Symbol) {
@@ -15,7 +14,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 
-const store = createStore(reducers);
+const store = createStore(reducers, compose(...enhances));
 
 
 export default store;

@@ -2,34 +2,20 @@ import 'modules/base-style';
 import './index.scss';
 import React from 'react';
 import { render } from 'react-dom';
+import { Provider, connect } from 'react-redux';
+import store from './store';
 
 import * as actions from './actions';
 
 
-class Item extends React.Component {
-  componentWillMount() {
-    console.log('moun334s33')
-  }
-  render() {
-    return (<div>{this.props.name}</div>)
-  }
-  componentWillUpdate() {
-    console.log('update')
-  }
-  componentDidUpdate(nextProps) {
-    console.log(this.props.name, nextProps.name)
-  }
-}
-
-
-class View extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       num: 1,
       arr: [
         {
-          name: 1
+          name: 5
         },
         {
           name: 2
@@ -49,8 +35,9 @@ class View extends React.Component {
         <div onClick={this.handleClick}>{this.state.num}</div>
         <div>
           {arr.map((item, index) => {
-            return (<Item key={item.name}
-              {...item} />)
+            return (
+              <div key={index}>{item.name}</div>
+            )
           })}
         </div>
       </div>
@@ -72,8 +59,20 @@ class View extends React.Component {
 
 
 
-let root = document.createElement('div')
+
+const mapStateToProps = state => {
+  return state
+}
+
+const Container = connect(mapStateToProps)(App)
+
+const root = document.createElement('div')
 document.body.insertBefore(root, document.body.firstChild)
-render(<View />, root)
+render(
+  <Provider store={store}>
+    <Container />
+  </Provider>, 
+  root
+)
 
 

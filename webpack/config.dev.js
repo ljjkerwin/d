@@ -144,6 +144,7 @@ const getConfig = ({
       new webpack.optimize.CommonsChunkPlugin({
         names: ['react-vendor', 'common', 'manifest'], // 公共的放最后
       }),
+      new webpack.HashedModuleIdsPlugin()
     ],
 
     resolve: {
@@ -196,7 +197,7 @@ const getConfigDev = () => {
       'process.env.NODE_ENV': '"development"',
     }),
     new LiveReloadPlugin({
-      appendScriptTag: true
+      appendScriptTag: true,
     }),
     new HtmlAssetsOrderFixerWebpackPlugin(),
   ]);

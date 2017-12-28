@@ -1,4 +1,4 @@
-import { AT as actionTypes } from '../actions';
+import { actionTypes as AT } from '../actions';
 
 
 const initState = window.__initState || {};

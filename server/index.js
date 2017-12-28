@@ -6,7 +6,8 @@ const
   ip = require('ip'),
   cookieParser = require('cookie-parser'),
   bodyParser = require('body-parser'),
-  apiRouter = require('./apiRouter');
+  apiRouter = require('./apiRouter'),
+  pageRouter = require('./pageRouter');
 
 
 commander
@@ -30,15 +31,9 @@ app
   .use(bodyParser.urlencoded({ extended: true }))
 
   
-app.use('/api', apiRouter())
-
-app.get('/react', function (req, res, next) {
-  res.sendFile(path.resolve('dist/react.html'))
-})
-
-app.get('/doing', function (req, res, next) {
-  res.sendFile(path.resolve('dist/doing.html'))
-})
+app
+  .use('/api', apiRouter())
+  .use(pageRouter())
 
 
 app.use(express.static('./', {
