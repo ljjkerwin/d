@@ -5,7 +5,7 @@ const
 
 
 const routes = [
-  ['post', '/upload', (req, res) => {console.log(req.body)
+  ['post', '/upload', (req, res) => {
     upload.single('fff')(req, res, err => {
       if (err) {
         console.log(err)

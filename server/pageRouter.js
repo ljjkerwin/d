@@ -12,7 +12,6 @@ const getTemplate = (function () {
     if (cache[path]) return cache[path];
 
     let template = fs.readFileSync(path, 'utf8');
-    console.log(template)
     template = Handlebars.compile(template);
     cache[path] = template;
 
@@ -29,7 +28,7 @@ const routes = [
       }
     }
 
-    let result = getTemplate('dist/react.html')({
+    let result = getTemplate(`dist/react.html`)({
       title: 'react',
       initState: `<script>window.__initState = ${JSON.stringify(initState)}</script>`
     })
@@ -38,7 +37,7 @@ const routes = [
   }],
 
   ['get', '/doing', function (req, res, next) {
-    res.send(getTemplate('dist/doing.html')({
+    res.send(getTemplate(`dist/doing.html`)({
       title: 'doing'
     }))
   }],

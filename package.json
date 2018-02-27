@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "server": "pm2 start server --watch server -- -e dev && pm2 logs --raw",
     "dev": "node_modules/.bin/webpack --config ./webpack/config.dev.js --watch",
-    "build": "node_modules/.bin/webpack --config ./webpack/config.build.js"
+    "dev:server": "pm2 start server --watch server -- -e dev && pm2 logs --raw",
+    "build": "node_modules/.bin/webpack --config ./webpack/config.build.js",
+    "server": "node server -e dev"
   },
   "devDependencies": {
     "Promise": "^1.0.5",
@@ -77,6 +78,7 @@
     "assert": "^1.4.1",
     "body-parser": "^1.18.2",
     "chunk-manifest-webpack-plugin": "^1.1.2",
+    "compression": "^1.7.2",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.2",
     "express-http-proxy": "^0.6.0",

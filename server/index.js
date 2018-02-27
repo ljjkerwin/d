@@ -6,8 +6,9 @@ const
   ip = require('ip'),
   cookieParser = require('cookie-parser'),
   bodyParser = require('body-parser'),
+  compression = require('compression'),
   apiRouter = require('./apiRouter'),
-  pageRouter = require('./pageRouter');
+  pageRouter = require('./pageRouter')
 
 
 commander
@@ -30,18 +31,24 @@ app
   .use(cookieParser())
   .use(bodyParser.urlencoded({ extended: true }))
 
-  
+
+
 app
   .use('/api', apiRouter())
   .use(pageRouter())
 
 
-app.use(express.static('./', {
-  maxAge: '0',
-  setHeaders: (res, path, stat) => {
-    res.set('Im', 'ljjkerwin');
-  },
-}))
+if (commander.env !== 'dev')
+app.use(compression()) // gzip
+
+
+app
+  .use(express.static('./', {
+    maxAge: '0',
+    setHeaders: (res, path, stat) => {
+      res.set('Im', 'ljjkerwin');
+    },
+  }))
 
 
 app
