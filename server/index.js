@@ -6,7 +6,6 @@ const
   ip = require('ip'),
   cookieParser = require('cookie-parser'),
   bodyParser = require('body-parser'),
-  compression = require('compression'),
   apiRouter = require('./apiRouter'),
   pageRouter = require('./pageRouter')
 
@@ -14,19 +13,19 @@ const
 commander
   .option('-p, --port <9394>', 'servicePort')
   .option('-e, --env <dev>')
-  .parse(process.argv);
+  .parse(process.argv)
 
 
 
 const
   app = express(),
-  servicePort = commander.port || 9394;
+  servicePort = commander.port || 9394
 
 
 app
   .use((req, res, next) => {
     // console.log('[log][request]:', req.url);
-    next();
+    next()
   })
   .use(cookieParser())
   .use(bodyParser.urlencoded({ extended: true }))
@@ -36,10 +35,6 @@ app
 app
   .use('/api', apiRouter())
   .use(pageRouter())
-
-
-if (commander.env !== 'dev')
-app.use(compression()) // gzip
 
 
 app

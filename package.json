@@ -6,7 +6,7 @@
     "dev": "node_modules/.bin/webpack --config ./webpack/config.dev.js --watch",
     "dev:server": "pm2 start server --watch server -- -e dev && pm2 logs --raw",
     "build": "node_modules/.bin/webpack --config ./webpack/config.build.js",
-    "server": "node server -e dev"
+    "server": "node server"
   },
   "devDependencies": {
     "Promise": "^1.0.5",
