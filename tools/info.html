@@ -15,12 +15,22 @@
 </head>
 
 <body>
+  <div id="openTime"></div>
+  <button onclick="refresh()">refresh</button>
   <div style="border: 1px solid black; width: 375px; height: 375px; ">
     375*375
   </div>
 
   <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
   <script>
+    openTime.innerHTML = Date.now()
+
+    window.refresh = function() {
+      console.log(3)
+      location.reload()
+    }
+
+
     var $body = $(document.body)
     $body.append('<p>ua: ' + navigator.userAgent + '</p>')
     $body.append('<p>dpr: ' + window.devicePixelRatio + '</p>')
