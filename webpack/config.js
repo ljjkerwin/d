@@ -182,7 +182,7 @@ const getConfig = ({
       template: path.resolve(projectPath, 'webpack/template.html'),
       chunks: ({
         react: ['manifest', 'common', 'react-vendor', entry],
-        doing: ['manifest', 'common', entry]
+        doing: ['manifest', 'common', 'react-vendor', entry]
       })[entryName],
     }))
   }

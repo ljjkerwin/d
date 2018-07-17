@@ -139,3 +139,46 @@ export function convertEmojione(content) {
   }
   return window.emojione ? emojione.unicodeToImage(content) : content;
 }
+
+
+
+/**
+ * 过滤数字输入，保留特定位数小数
+ */
+export function numberInputFilter(num, fix = 2) {
+  num = String(num);
+
+  let match = num.match(fix ? new RegExp(`^((0|[1-9][0-9]*)(\\.\\d{0,${fix}})?)`) : /^(0|[1-9][0-9]*)/);
+
+  return match ? match[1] : '';
+}
+
+
+/**
+ * 每隔x秒执行一次，最后延时x秒后执行一次
+ */
+export default function throttleDebounce(fun, interval = 200) {
+  let timer,
+      noStop = false; // 标记timer期间是否有触发
+
+  const setTimer = function (args) {
+      if (timer) return;
+      timer = setTimeout(function () {
+          clearTimeout(timer);
+          timer = null;
+          if (noStop) {
+              noStop = false;
+              setTimer(args);
+              fun(...args);
+          }
+      }, interval)
+  }
+
+  return function (...args) {
+      noStop = true;
+      if (!timer) {
+          setTimer(args);
+          fun(...args);
+      }
+  }
+}
