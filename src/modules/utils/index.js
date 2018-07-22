@@ -8,30 +8,6 @@ export function getUrlParams() {
 }
 
 
-/**
- * 时间格式化
- * 例：formatDate(1462434312000, 'yy/MM/dd')  返回  16/05/05
- */
-export function formatDate(timestamp, str) {
-  if (!timestamp) return '';
-  var date = new Date(timestamp);
-  var obj = {
-    'M+': date.getMonth() + 1,
-    'd+': date.getDate(),
-    'h+': date.getHours(),
-    'm+': date.getMinutes(),
-    's+': date.getSeconds()
-  };
-  str = str.replace(/y+/g, function(match) {
-    return (date.getFullYear() + '').substr(4 - match.length)
-  });
-  for (var key in obj) {
-    str = str.replace(new RegExp(key, 'g'), function (match) {
-      return (match.length === 1) ? (obj[key]) : ('00' + obj[key]).substr(('' + obj[key]).length);
-    });
-  }
-  return str;
-}
 
 export const device = {
   ua: window.navigator.userAgent || '',
@@ -151,34 +127,4 @@ export function numberInputFilter(num, fix = 2) {
   let match = num.match(fix ? new RegExp(`^((0|[1-9][0-9]*)(\\.\\d{0,${fix}})?)`) : /^(0|[1-9][0-9]*)/);
 
   return match ? match[1] : '';
-}
-
-
-/**
- * 每隔x秒执行一次，最后延时x秒后执行一次
- */
-export default function throttleDebounce(fun, interval = 200) {
-  let timer,
-      noStop = false; // 标记timer期间是否有触发
-
-  const setTimer = function (args) {
-      if (timer) return;
-      timer = setTimeout(function () {
-          clearTimeout(timer);
-          timer = null;
-          if (noStop) {
-              noStop = false;
-              setTimer(args);
-              fun(...args);
-          }
-      }, interval)
-  }
-
-  return function (...args) {
-      noStop = true;
-      if (!timer) {
-          setTimer(args);
-          fun(...args);
-      }
-  }
 }
