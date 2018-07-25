@@ -19,23 +19,33 @@ class App extends React.Component {
 
 	componentDidMount() {
 		
-		demo.style.transition= `transform 10000ms linear`;
-		demo.style.transform= `translate3d(${-600}px,0,0)`;
-		
-		return
-		this.setState({
-			currentTime: this.state.currentTime
-		})
-		setTimeout(() => {
-			this.setState({
-				currentTime: this.state.currentTime + 1
-			})
-		}, 1000)
-		setInterval(() => {
-			this.setState({
-				currentTime: this.state.currentTime + 3
-			})
-		}, 5000)
+	
+
+function addBullet(id) {
+	let b = document.createElement('div')
+	b.className='co-bullet'
+
+	b.innerHTML=`
+	<div class="avatar"></div>
+	<div class="content">35r23423</div>
+	`
+
+	document.getElementById(id).appendChild(b)
+
+	setTimeout(() => {
+		b.style.transition= `transform 5000ms linear`;
+		b.style.transform= `translate3d(${-1150}px,0,0)`;
+	},100)
+
+}
+
+setInterval(() => {
+	addBullet('l1')
+	// addBullet('l2')
+},2000)
+
+
+
 	}
 
 	render() {
@@ -43,15 +53,14 @@ class App extends React.Component {
 			
 
 			<div id="wrap">
-				<div class="co-bullet" id="demo">
-				<div className="content">35r23324523423</div></div>
 			
-			{/* <BulletScreen 
-				currentTime={this.state.currentTime}
-			/> */}
-			
+				<div id='l1' style={{position: 'absolute',width: '100%', top: 0}}></div>
+				<div id='l2' style={{position: 'absolute',width: '100%', top: 100}}></div>
 			
 			</div>
+
+
+
 			<div id="oo" style={{wordBreak: 'break-all'}}>
 			</div>
 			
@@ -64,3 +73,5 @@ class App extends React.Component {
 render(
 <App/>
 , document.getElementById('root'))
+
+
