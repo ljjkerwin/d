@@ -9,7 +9,7 @@ const getTemplate = (function () {
   const cache = {};
 
   return path => {
-    if (cache[path]) return cache[path];
+    // if (cache[path]) return cache[path];
 
     let template = fs.readFileSync(path, 'utf8');
     template = Handlebars.compile(template);

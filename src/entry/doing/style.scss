@@ -9,63 +9,156 @@ body {
 }
 
 
+#wrap {
+	box-sizing: border-box;
+	width: 100%;
+	height: 500px;
+	border: 1px solid black;
+	position: relative;
+}
+
+
+
+$red: #F73657;
+$orange: #FF9F00;
 
 .co-bullet-screen {
-    position: fixed;
+	transform: translateZ(0);
+    position: absolute;
     z-index: 2;
     top: 0;
-    left: 200px;
-    width: 500px;
-    height: 500px;
-  
+    left: 0;
+    height:100%;
+    width: 100%;
     overflow: hidden;
-    background: linear-gradient(to bottom, rgba(255,255,255,.8), rgba(255,255,255,.95));
+    // background: linear-gradient(to bottom, rgba(255,255,255,.8), rgba(255,255,255,.95));
     
     &.co-bullet-screen-enter {
         opacity: .01;
-        transition: opacity 2s;
+        transition: opacity 1s;
         &.co-bullet-screen-enter-active {
             opacity: 1;
         }
     }
 
-	.reference {
-		width: 0;
-		height: 60px;
-		opacity: 0;
-	}
-	
-	.co-bullet {
-		position: absolute;
-		font-size: 0;
-		color: #fff;
-		white-space: nowrap;
-		left: 100%;
-		// transform: translateX(0);
-		// transition: left 5s linear, transform 5s linear;
-		.avator {
-			display: inline-block;
-			vertical-align: middle;
-			width: 60px;
-			height: 60px;
-			border: 1px solid #666;/*no*/
-			border-radius: 50%;
-		}
-		.content {
-			display: inline-block;
-			vertical-align: middle;
-			padding: 0 1em;
-			margin-left: 12px;
-			font-size: 24px;
-			line-height: 52px;
-			height: 52px;
-			border-radius: 26px;
-			background-color: rgba(0,0,0,.6);
-		}
-		&.run {
-			// left: -2%;
-			// transform: translateX(-100%);
-		}
-	}
+    &.co-bullet-screen-exit {
+        opacity: 1;
+        transition: opacity .3s;
+        &.co-bullet-screen-exit-active {
+            opacity: .01;
+        }
+    }
+
+    .reference {
+        width: 0;
+        height: 60px;
+        opacity: 0;
+    }
+}
+    .co-bullet {
+        position: absolute;
+        font-size: 0;
+        color: #fff;
+        white-space: nowrap;
+        left: 100%;
+        transform: translate3d(0,0,0);
+        .avatar {
+            display: inline-block;
+            vertical-align: middle;
+            width: 60px;
+            height: 60px;
+            border: 1px solid #666;/*no*/
+            border-radius: 50%;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
+        .content {
+            display: inline-block;
+            vertical-align: middle;
+            padding: 0 1em;
+            margin-left: 12px;
+            font-size: 24px;
+            line-height: 52px;
+            height: 52px;
+            border-radius: 26px;
+            background-color: rgba(0,0,0,.6);
+        }
+
+        &.role-user {
+            .avatar {
+                border-color: $orange;
+            }
+            .content {
+                background-color: $orange;
+            }
+        }
+
+        &.current-user {
+            .avatar {
+                border-color: $red;
+            }
+            .content {
+                background-color: $red;
+            }
+        }
+    }
+
+
+
+.co-bullet-screen-controller {
+    height: 108px;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    div {
+        padding: 20px 40px;
+        span {
+            display: block;
+            width: 48px;
+            height: 48px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+        }
+    }
 }
 
+.co-bullet-screen-send-bar{
+    height:108px;
+    border-top:1px solid #eee;/*no*/
+    background:#fff;
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    display:flex;
+    align-items: center;
+    overflow: hidden;
+    input{
+        background:#eee;
+        border:0;
+        padding:0 30px;
+        font-size:28px;/*px*/
+        border-radius: 100px;
+        height:68px;
+        margin-left:20px;
+        flex:1;
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        line-height:normal;
+        outline: none;
+    }
+    .send-btn{
+        width:144px;
+        height:100%;
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        line-height:normal;
+        color:$red;
+        font-size:32px;/*px*/
+    }
+}
