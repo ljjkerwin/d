@@ -10,7 +10,8 @@
 冒泡排序
 重复地走访过排序的元素，依次比较相邻两个元素，如果他们的顺序错误就把他们调换过来，直到没有元素再需要交换，排序完成。这个算法的名字由来是因为越小(或越大)的元素会经由交换慢慢“浮”到数列的顶端。
 时间复杂度：n^2：(n-1+1)*(n-1)/2 = n(n-1)/2
-稳定
+空间复杂度：1
+稳定性：稳定
  */
 export function bubbleSort(arr = []) {
   const len = arr.length;
@@ -31,6 +32,7 @@ export function bubbleSort(arr = []) {
 /**
 选择排序：初始时在序列中找到最小（大）元素，放到序列的起始位置作为已排序序列；然后，再从剩余未排序元素中继续寻找最小（大）元素，放到已排序序列的末尾。以此类推，直到所有元素均排序完毕。
 与冒泡的区别：冒泡时排序不正确即交换，选择排序则是每一个父循环交换一次
+空间复杂度：1
 稳定性：不稳定，例如[5,5,2]的首轮排序，第一个5和2交换了位置
  */
 export function selectionSort(arr = []) {
@@ -56,6 +58,8 @@ export function selectionSort(arr = []) {
 /**
 插入排序：对于未排序数据(右手抓到的牌)，在已排序序列(左手已经排好序的手牌)中从后向前扫描，找到相应位置并插入。
 插入排序不适合对于数据量比较大的排序应用
+空间复杂度：1
+稳定性：稳定
  */
 export function insertionSort(arr = []) {
   const len = arr.length;
@@ -106,7 +110,8 @@ export function insertionSortDychotomy(arr = []) {
 /**
 快速排序：通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小，然后再按此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，以此达到整个数据变成有序序列。
 时间复杂度：nlogn
-不稳定
+空间复杂度：logn
+稳定性：不稳定
  */
 export function quickSort(arr = [], start = 0, end = arr.length - 1) {
   if (start >= end) return;
@@ -127,3 +132,12 @@ export function quickSort(arr = [], start = 0, end = arr.length - 1) {
   quickSort(arr, left + 1, end);
   return arr;
 }
+
+
+
+/**
+归并排序
+时间复杂度：nlogn
+空间复杂度：n
+稳定性：稳定
+ */

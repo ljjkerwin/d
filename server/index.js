@@ -42,6 +42,7 @@ app
     maxAge: '0',
     setHeaders: (res, path, stat) => {
       res.set('Im', 'ljjkerwin');
+      res.set('Access-Control-Allow-Origin', '*');
     },
   }))
 
