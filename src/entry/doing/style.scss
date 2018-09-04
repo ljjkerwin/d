@@ -16,6 +16,7 @@ body {
 	border: 1px solid black;
     position: relative;
     margin-left: 100px;
+    z-index: 0;
 }
 
 
@@ -148,4 +149,14 @@ $orange: #FF9F00;
         color:$red;
         font-size:32px;/*px*/
     }
+}
+
+
+.bullet {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    transform: translate3d(0,0,0);
+    font-size: 14px;
+    line-height: 2;
 }
