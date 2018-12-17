@@ -3,11 +3,13 @@ const
   path = require('path'),
   webpack = require('webpack'),
   ipAddress = require('./ipAddress'),
-  ExtractTextPlugin = require('extract-text-webpack-plugin'),
   AssetsWebpackPlugin = require('assets-webpack-plugin'),
   LiveReloadPlugin = require('webpack-livereload-plugin'),
   HtmlWebpackPlugin = require('html-webpack-plugin'),
   HtmlAssetsOrderFixerWebpackPlugin = require('./html-assets-order-fixer-webpack-plugin');
+
+
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 
 let projectPath = path.resolve(__dirname, '../'),
@@ -18,8 +20,9 @@ let projectPath = path.resolve(__dirname, '../'),
 let entry = {};
 
 [
-  'react',
-  'doing'
+  // 'react',
+  'doing',
+  // 'demo',
 ].forEach(e => {
   entry[e] = path.resolve(entryPath, e)
 })
@@ -31,15 +34,12 @@ const getConfig = ({
 } = {}) => {
 
   let config = {
-    entry: Object.assign(entry, {
-      'common': ['lib/zepto-custom'],
-      'react-vendor': ['react', 'react-dom', 'redux'],
-    }),
+    entry: Object.assign(entry),
 
     output: {
       path: path.resolve(outputPath, distName),
       publicPath: `/${distName}/`,
-      filename: isProd && false ?
+      filename: isProd ?
         'js/[name].[chunkhash:8].js' :
         'js/[name].js'
     },
@@ -48,43 +48,41 @@ const getConfig = ({
       rules: [
         {
           test: /\.jsx?$/,
-          exclude: /(node_modules|bower_components)/,
+          exclude: /(node_modules)/,
           use: [
             {
               loader: 'babel-loader?cacheDirectory',
             },
           ]
         },
-        {
-          test: /\.tsx?$/,
-          exclude: /(node_modules|bower_components)/,
-          loader: 'awesome-typescript-loader'
-        },
+        // {
+        //   test: /\.tsx?$/,
+        //   exclude: /(node_modules|bower_components)/,
+        //   loader: 'awesome-typescript-loader'
+        // },
         {
           test: /\.s?css$/,
           exclude: /node_modules/,
-          use: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: [
-              {
-                loader: 'css-loader',
-                query: isProd ? 'minimize' : 'sourceMap',
-              },
-              {
-                loader: 'postcss-loader',
-                options: {
-                  plugins: () => [
-                    require('autoprefixer')({
-                      browsers: ['> 2%', 'not ie <= 8', 'last 2 versions', 'Firefox ESR', 'iOS >= 8']
-                    })
-                  ]
-                }
-              },
-              {
-                loader: 'sass-loader',
-              },
-            ]
-          })
+          use: [
+            MiniCssExtractPlugin.loader,
+            {
+              loader: 'css-loader',
+              query: isProd ? 'minimize' : 'sourceMap',
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: () => [
+                  require('autoprefixer')({
+                    browsers: ['> 2%', 'not ie <= 8', 'last 2 versions', 'Firefox ESR', 'iOS >= 8']
+                  })
+                ]
+              }
+            },
+            {
+              loader: 'sass-loader',
+            },
+          ]
         },
         {
           test: /\.s?css_$/,
@@ -115,7 +113,7 @@ const getConfig = ({
           test: /\.(jpg|png|ico|svg)$/,
           loader: 'url-loader',
           options: {
-            limit: 10,
+            limit: 5,
             name: 'images/[name].[hash:8].[ext]'
           }
         },
@@ -123,8 +121,16 @@ const getConfig = ({
           test: /\.(ttf|eot|woff|woff2)$/,
           loader: 'url-loader',
           options: {
-            limit: 10,
+            limit: 5,
             name: 'fonts/[name].[hash:8].[ext]'
+          }
+        },
+        {
+          test: /\.(mp3)$/,
+          loader: 'url-loader',
+          options: {
+            limit: 5,
+            name: 'media/[name].[hash:8].[ext]'
           }
         },
         // {
@@ -135,13 +141,9 @@ const getConfig = ({
     },
 
     plugins: [
-      new ExtractTextPlugin({
-        filename: isProd && false ?
-          'css/[name].[contenthash:8].css' :
-          'css/[name].css',
-      }),
-      new webpack.optimize.CommonsChunkPlugin({
-        names: ['react-vendor', 'common', 'manifest'], // 公共的放最后
+      new MiniCssExtractPlugin({
+        filename: isProd ? '[name].[contenthash:8].css' : '[name].css',
+        chunkFilename: "[id].css"
       }),
       new webpack.HashedModuleIdsPlugin()
     ],
@@ -187,7 +189,7 @@ const getConfig = ({
     }))
   }
 
-  config.plugins = config.plugins.concat(htmls)
+  // config.plugins = config.plugins.concat(htmls)
 
 
   return config
@@ -212,7 +214,7 @@ const getConfigDev = () => {
     new LiveReloadPlugin({
       appendScriptTag: true,
     }),
-    new HtmlAssetsOrderFixerWebpackPlugin(),
+    // new HtmlAssetsOrderFixerWebpackPlugin(),
   ]);
 
   return config
@@ -226,7 +228,7 @@ const getConfigBuild = () => {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"',
     }),
-    new (require('uglifyjs-webpack-plugin'))(),
+    // new (require('webpack-bundle-analyzer').BundleAnalyzerPlugin)(),
   ]);
 
   return config
