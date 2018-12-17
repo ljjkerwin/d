@@ -16,6 +16,8 @@
 
 <body>
   <div id="openTime"></div>
+
+  <div class="log"></div>
   
   <div style="font-weight: 100;">字体粗细100</div>
   <div style="font-weight: 200;">字体粗细200</div>
@@ -38,11 +40,16 @@
 
 
 
-    var $body = $(document.body)
-    $body.append('<p>ua: ' + navigator.userAgent + '</p>')
-    $body.append('<p>dpr: ' + window.devicePixelRatio + '</p>')
-    $body.append('<p>screenWidth: ' + screen.width + '</p>')
-    $body.append('<p>htmlWidth: ' + document.documentElement.clientWidth + '</p>')
+    var $log = $('.log');
+    var log = function (k, v) {
+      $log.append('<p style="margin-bottom: .2em;">' +k+ ': <span style="color: #999;">' + v + '</span></p>')
+    }
+
+    log('ua', navigator.userAgent);
+    log('platform', navigator.platform);
+    log('dpr', window.devicePixelRatio);
+    log('screenWidth', screen.width);
+    log('htmlWidth', document.documentElement.clientWidth);
   </script>
 </body>
 
