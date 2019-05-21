@@ -6,7 +6,7 @@ const
   ip = require('ip'),
   cookieParser = require('cookie-parser'),
   bodyParser = require('body-parser'),
-  apiRouter = require('./apiRouter'),
+  // apiRouter = require('./apiRouter'),
   pageRouter = require('./pageRouter')
 
 
@@ -33,7 +33,7 @@ app
 
 
 app
-  .use('/api', apiRouter())
+  // .use('/api', apiRouter())
   .use(pageRouter())
 
 

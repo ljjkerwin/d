@@ -1,7 +1,7 @@
-import './style.scss'
+import './style.scss';
 import React from 'react';
 import { render } from 'react-dom';
-
+console.log('doing')
 
 
 class App extends React.Component {
@@ -18,41 +18,20 @@ class App extends React.Component {
 
 	render() {
 		return <div>
-			
 
-			<div id="wrap">
-			
-			</div>
-1
-1
-1
-1
-1
-1
-			<div onClick={() => {
-				this.bs.play();
-			}}>play</div>
-			1
-			1
-			1
-			1
-			1
-			1
-			1
-			1
-			<div onClick={() => {
-				this.bs.pause(true);
-			}}>pause</div>
 
+
+123
 		</div>
 	}
 }
 
 
 
+
 render(
 <App/>
-, document.getElementById('root'))
+, document.body.appendChild(document.createElement('div')))
 
 
 

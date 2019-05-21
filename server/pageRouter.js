@@ -21,6 +21,11 @@ const getTemplate = (function () {
 
 
 const routes = [
+  ['get', '/doing', function (req, res, next) {
+    res.send(getTemplate(`dist/index.html`)({
+      title: 'doing'
+    }))
+  }],
   ['get', '/react', function (req, res, next) {
     let initState = {
       userInfo: {
@@ -34,12 +39,6 @@ const routes = [
     })
 
     res.send(result)
-  }],
-
-  ['get', '/doing', function (req, res, next) {
-    res.send(getTemplate(`dist/doing.html`)({
-      title: 'doing'
-    }))
   }],
 ]
 
