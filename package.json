@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "server": "nodemon server -w ./server",
-    "build": "cross-env NODE_ENV=development nodemon node_modules/.bin/webpack -w ./webpack -- --config ./webpack/config.dev.js --watch"
+    "dev": "cross-env NODE_ENV=development nodemon node_modules/.bin/webpack-dev-server -w ./webpack -- --config ./webpack/config.dev.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
     "cookie-parser": "^1.4.4",
     "express": "^4.17.0",
     "handlebars": "^4.1.2",
+    "http-proxy-middleware": "^0.19.1",
     "ip": "^1.1.5",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
@@ -41,6 +42,7 @@
     "postcss-loader": "^3.0.0",
     "sass-loader": "^7.1.0",
     "webpack": "^4.32.0",
-    "webpack-cli": "^3.3.2"
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "^3.4.1"
   }
 }

@@ -7,19 +7,20 @@ const
   cookieParser = require('cookie-parser'),
   bodyParser = require('body-parser'),
   // apiRouter = require('./apiRouter'),
-  pageRouter = require('./pageRouter')
+  pageRouter = require('./pageRouter');
+
 
 
 commander
   .option('-p, --port <9394>', 'servicePort')
   .option('-e, --env <dev>')
-  .parse(process.argv)
+  .parse(process.argv);
 
 
 
 const
   app = express(),
-  servicePort = commander.port || 9394
+  servicePort = commander.port || 9394;
 
 
 app
@@ -34,8 +35,9 @@ app
 
 app
   // .use('/api', apiRouter())
-  .use(pageRouter())
+  .use(pageRouter)
 
+    
 
 app
   .use(express.static('./', {

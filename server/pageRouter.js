@@ -1,63 +1,36 @@
 const
   path = require('path'),
   fs = require('fs'),
-  express = require('express'),
-  Handlebars = require('handlebars');
+  router = require('express').Router(),
+  Handlebars = require('handlebars'),
+  proxy = require('http-proxy-middleware'),
+  webpackEntry = require('../webpack/config').entry;
 
 
-const getTemplate = (function () {
-  const cache = {};
 
-  return path => {
-    // if (cache[path]) return cache[path];
-
-    let template = fs.readFileSync(path, 'utf8');
-    template = Handlebars.compile(template);
-    cache[path] = template;
-
-    return template
-  }
-})()
+webpackEntry.forEach(entry => {
+  router.get(`/${entry}`, proxy({
+    target: `http://localhost:${9000}/`,
+    pathRewrite: {'.*' : `/dist/${entry}.html`}
+  }))
+})
 
 
-const routes = [
-  ['get', '/doing', function (req, res, next) {
-    res.send(getTemplate(`dist/index.html`)({
-      title: 'doing'
-    }))
-  }],
-  ['get', '/react', function (req, res, next) {
-    let initState = {
-      userInfo: {
-        name: 'kerwin'
-      }
-    }
 
-    let result = getTemplate(`dist/react.html`)({
-      title: 'react',
-      initState: `<script>window.__initState = ${JSON.stringify(initState)}</script>`
-    })
-
-    res.send(result)
-  }],
-]
+module.exports = router;
 
 
-const pageRouter = function () {
-  const router = express.Router();
+// const getTemplate = (function () {
+//   const cache = {};
 
-  routes.forEach(route => {
-    let method = route[0],
-        path = route[1],
-        middlewares = route.slice(2);
+//   return path => {
+//     // if (cache[path]) return cache[path];
 
-    if (router[method]) {
-      router[method](path, middlewares)
-    }
-  })
+//     let template = fs.readFileSync(path, 'utf8');
+//     template = Handlebars.compile(template);
+//     cache[path] = template;
 
-  return router;
-}
+//     return template
+//   }
+// })()
 
-
-module.exports = pageRouter

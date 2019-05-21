@@ -12,11 +12,12 @@ const
 
 
 
-let entry = [
+const entry = [
   // 'react',
   'doing',
-  // 'demo',
-]
+  'demo',
+];
+exports.entry = entry;
 
 
 const getConfig = () => {
@@ -29,7 +30,7 @@ const getConfig = () => {
 
     output: {
       path: outputPath,
-      publicPath: `/dist/`,
+      publicPath: `//localhost:9000/dist/`,
       filename: 'js/[name].js'
     },
 
@@ -45,9 +46,6 @@ const getConfig = () => {
           use: [
             {
               loader: MiniCssExtractPlugin.loader,
-              options: {
-                hmr: process.env.NODE_ENV === 'development',
-              },
             },
             'css-loader',
             {
@@ -70,10 +68,16 @@ const getConfig = () => {
       new MiniCssExtractPlugin({
         filename: 'css/[name].css',
       }),
-      new HtmlWebpackPlugin(),
     ]
   }
 
+  entry.forEach(e => {
+    config.plugins.push(new HtmlWebpackPlugin({
+      filename: `${e}.html`,
+      chunks: [e],
+    }))
+  })
+  
   return config
 }
 
@@ -82,6 +86,11 @@ const getConfigDev = () => {
   let config = getConfig();
 
   config.mode = 'development';
+
+  config.devServer = {
+    contentBase: projectPath,
+    port: 9000
+  };
 
   return config;
 }
