@@ -9,7 +9,7 @@ const
 
 
 webpackEntry.forEach(entry => {
-  router.get(`/${entry}`, proxy({
+  router.use(`/${entry}`, proxy({
     target: `http://localhost:${9000}/`,
     pathRewrite: {'.*' : `/dist/${entry}.html`}
   }))
