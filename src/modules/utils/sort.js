@@ -90,26 +90,6 @@ function insertionSort(arr) {
     let cur = arr[i]; // 缓存当前对比元素，空出一个位置让前面的元素可以往后推移动
 
     let j = i - 1;
-    for (; j >= 0; j--) {
-      if (arr[j] <= cur) {
-        break;
-      }
-      // 往后推一格
-      arr[j + 1] = arr[j];
-    }
-    arr[j + 1] = cur;
-  }
-
-  return arr;
-}
-
-function insertionSort2(arr) {
-  const n = arr.length;
-
-  for (let i = 1; i < n; i++) {
-    let cur = arr[i]; // 缓存当前对比元素，空出一个位置让前面的元素可以往后推移动
-
-    let j = i - 1;
     while (j >= 0 && arr[j] > cur) {
       arr[j + 1] = arr[j];
       j--;
@@ -207,12 +187,11 @@ function insertionSortDychotomy(arr = []) {
 空间复杂度：O(n)
 稳定性：稳定
  */
-function　_mergeSort(left, right){
+function　mergeSort_merge(left, right) {
   var　result =[];
 
   while(left.length > 0 && right.length > 0){
     if (left[0] <= right[0]) {
-    /*shift()方法用于把数组的第一个元素从其中删除，并返回第一个元素的值。*/
       result.push(left.shift());
     } else {
       result.push(right.shift());
@@ -221,7 +200,7 @@ function　_mergeSort(left, right){
   return　result.concat(left).concat(right);
 }
 
-function　mergeSort(items){
+function mergeSort0(items) {
   if (items.length == 1) {
     return　items;
   }
@@ -229,7 +208,47 @@ function　mergeSort(items){
   var　middle = Math.floor(items.length/2),
   left = items.slice(0, middle),
   right = items.slice(middle);
-  return　_mergeSort(mergeSort(left), mergeSort(right));
+  return　mergeSort_merge(mergeSort(left), mergeSort(right));
+}
+
+
+/**
+归并迭代版
+避免了递归时深度为log2N的栈空间
+ */
+function mergeSort(arr) {
+  const n = arr.length;
+  let newArr = [];
+
+  for (let size = 2; size < n * 2; size *= 2) {
+    for (let left = 0; left < n; left += size) {
+      let right = left + size - 1;
+      if (right >= n) right = n - 1;
+      let mid = left + size / 2;
+
+      let i = left,
+        j = mid,
+        cur = left;
+
+      while (i < mid && j <= right) {
+        if (arr[i] <= arr[j]) {
+          newArr[cur++] = arr[i++];
+        } else {
+          newArr[cur++] = arr[j++];
+        }
+      }
+      while (i < mid) {
+        newArr[cur++] = arr[i++];
+      }
+      while (j <= right) {
+        newArr[cur++] = arr[j++];
+      }
+    }
+    arr = newArr; // 下一个循环操作对象是上一个的结果
+    newArr = []; // 临时空间清空
+  }
+
+  return arr;
 }
 
 
@@ -287,25 +306,32 @@ function quickSort(arr = [], start = 0, end = arr.length - 1) {
  */
 function heapSort(arr) {
   function shiftDown(arr, top, len) {
-    for (let left = top * 2 + 1; left < len; left = left * 2 + 1) {
-      if (left + 1 < len && arr[left + 1] > arr[left]) left++; // 选择自节点最大值
-      if (arr[top] < arr[left]) {
-        swap(arr, top, left);
-        top = left;
+    let cur = arr[top];
+    let i = top * 2 + 1;
+    while (i < len) {
+      if (i + 1 < len && arr[i] < arr[i + 1]) {
+        i++;
+      }
+      if (cur < arr[i]) {
+        arr[top] = arr[i];
+        top = i;
+        i = i * 2 + 1;
       } else {
-        return; // 不需要修复的情况
+        break;
       }
     }
+    arr[(i - 1) / 2] = cur;
   }
 
-  // 从后往前构建大顶堆
-  for (let i = ~~(arr.length / 2) - 1; i >= 0; i--) {
-    shiftDown(arr, i, arr.length);
+  const n = arr.length;
+
+  for (let i = ~~(n / 2) - 1; i >= 0; i--) {
+    shiftDown(arr, i, n);
   }
 
-  for (let i = arr.length - 1; i > 0; i--) {
+  for (let i = n - 1; i > 0; i--) {
     swap(arr, 0, i);
-    shiftDown(arr, 0, i); // 调换位置后，修复大顶堆
+    shiftDown(arr, 0, i);
   }
 
   return arr;
@@ -367,21 +393,21 @@ function bulletSort(arr) {
 
 
 
-// class Num {
-//   constructor(v) {
-//     this.v = v;
-//   }
-//   valueOf() {
-//     // console.log('valueOf')
-//     return parseInt(this.v);
-//   }
-//   toString() {
-//     // console.log('toString')
-//     return String(this.v);
-//   }
-// }
+class Num {
+  constructor(v) {
+    this.v = v;
+  }
+  valueOf() {
+    // console.log('valueOf')
+    return parseInt(this.v);
+  }
+  toString() {
+    // console.log('toString')
+    return String(this.v);
+  }
+}
 
+const arr = [6,2,1,new Num(8.1),new Num(8.2),new Num(8.3),new Num(8.4),new Num(8.5),4,2,7,21]
 
-// const arr = [6,2,1,new Num(8.1),new Num(8.2),new Num(8.3),new Num(8.4),new Num(8.5),4,2,7,21]
-
-// console.log(bulletSort(arr).join(','))
+console.log(arr.join(','),'---')
+console.log(heapSort(arr).join(','))
