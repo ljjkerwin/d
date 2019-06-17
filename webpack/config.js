@@ -30,7 +30,7 @@ const getConfig = () => {
 
     output: {
       path: outputPath,
-      publicPath: `//localhost:9000/dist/`,
+      publicPath: `/dist/`,
       filename: 'js/[name].js'
     },
 
@@ -75,6 +75,7 @@ const getConfig = () => {
     config.plugins.push(new HtmlWebpackPlugin({
       filename: `${e}.html`,
       chunks: [e],
+      template: path.resolve(projectPath, './webpack/template.html'),
     }))
   })
   

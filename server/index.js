@@ -8,6 +8,7 @@ const
   bodyParser = require('body-parser'),
   // apiRouter = require('./apiRouter'),
   pageRouter = require('./pageRouter');
+const proxy = require('http-proxy-middleware');
 
 
 
@@ -21,6 +22,11 @@ commander
 const
   app = express(),
   servicePort = commander.port || 9394;
+
+
+app.get('/dist*', proxy({
+  target: `http://localhost:${9000}`,
+}))
 
 
 app

@@ -22,7 +22,8 @@
     "http-proxy-middleware": "^0.19.1",
     "ip": "^1.1.5",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "vconsole": "^3.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
