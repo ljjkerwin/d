@@ -178,10 +178,11 @@ function insertionSortDychotomy(arr = []) {
 归并操作(merge)，也叫归并算法，指的是将两个顺序序列合并成一个顺序序列的方法。
 归并排序，采用分治法，递归拆分子序列；使每个子序列有序，合并有序的子序列后再次排序，结果返回到上一层
 
-改进归并排序在归并时先判断前段序列的最大值与后段序列最小值的关系再确定是否进行复制比较，最佳时间复杂度可达O(n)
-
 因为需要额外空间，所以大数据量排序不建议使用
 因为使用递归调用，长度为n的数组最终会调用mergeSort()函数 2n-1次，这意味着一个长度超过1500的数组会在Firefox上发生栈溢出错误。可以考虑使用迭代来实现同样的功能。
+
+改进：归并时先判断前段序列的最大值与后段序列最小值的关系再确定是否进行比较，最佳时间复杂度可达O(n)
+
 
 时间复杂度：平均O(nlog2n) 最佳O(n) 最坏O(nlog2n)
 空间复杂度：O(n)
@@ -214,7 +215,7 @@ function mergeSort0(items) {
 
 /**
 归并迭代版
-避免了递归时深度为log2N的栈空间
+避免了递归时深度为log2n的栈空间
  */
 function mergeSort(arr) {
   const n = arr.length;
@@ -259,6 +260,8 @@ function mergeSort(arr) {
 
 通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小，然后再按此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，以此达到整个数据变成有序序列。
 
+优化：取左中右三值得中间值做参考值，减少最坏情况出现
+
 时间复杂度：平均O(nlog2n) 最佳O(nlog2n) 最坏O(n^2)
 空间复杂度：O(log2n)
 稳定性：不稳定
@@ -300,7 +303,7 @@ function quickSort(arr = [], start = 0, end = arr.length - 1) {
 
 将大顶堆根节点跟最后一个节点交换，将剩下节点通过shiftDown修复为大顶堆；如此重复，直至剩余的元素个数为1
 
-时间复杂度：o(nlog2n)
+时间复杂度：O(nlog2n)
 空间复杂度：O(1)
 稳定性：不稳定
  */
@@ -365,24 +368,28 @@ function bulletSort(arr) {
     }
   }
 
-  let bulletSize = 2;
-  let bulletCount = Math.floor((max - min) / bulletSize) + 1;
+  let range = 2;
+  let count = Math.floor((max - min) / range) + 1;
 
   const bullets = [];
-  for (let i = 0; i < bulletCount; i++) {
+  for (let i = 0; i < count; i++) {
     bullets[i] = [];
   }
 
   for (let i = 0; i < len; i++) {
-    bullets[Math.floor((arr[i] - min) / bulletSize)].push(arr[i]);
+    bullets[Math.floor((arr[i] - min) / range)].push(arr[i]);
   }
 
-  arr.length = 0;
-  for (let i = 0; i < bulletCount; i++) {
+  for (let i = 0; i < count; i++) {
     insertionSort(bullets[i]);
-    let len = bullets[i].length;
-    for (let j = 0; j < len; j++) {
-      arr.push(bullets[i][j]);
+
+    if (i) {
+      let len = bullets[i].length;
+      for (let j = 0; j < len; j++) {
+        arr.push(bullets[i][j]);
+      }
+    } else {
+      arr = bullets[0];
     }
   }
 
@@ -410,4 +417,4 @@ class Num {
 const arr = [6,2,1,new Num(8.1),new Num(8.2),new Num(8.3),new Num(8.4),new Num(8.5),4,2,7,21]
 
 console.log(arr.join(','),'---')
-console.log(heapSort(arr).join(','))
+console.log(bulletSort(arr).join(','))
