@@ -18,7 +18,7 @@
     "commander": "^2.20.0",
     "cookie-parser": "^1.4.4",
     "express": "^4.17.0",
-    "handlebars": "^4.1.2",
+    "handlebars": "^4.4.5",
     "http-proxy-middleware": "^0.19.1",
     "ip": "^1.1.5",
     "react": "^16.8.6",
